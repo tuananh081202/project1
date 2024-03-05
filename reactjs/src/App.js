@@ -1,6 +1,6 @@
 import './App.css';
 import './css/styles.css'
-import { Route,Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import Register from './components/Register';
 import Main from './layouts/Main';
@@ -38,57 +38,61 @@ import CartRead from './components/Cart/CartRead';
 import RatingRead from './components/Rating/RatingRead';
 import PostList from './components/Post/PostList';
 import PostAdd from './components/Post/PostAdd';
+import PostRead from './components/Post/PostRead';
+import PostUpdate from './components/Post/PostUpdate';
 
-function App  ()  {
+function App() {
   return (
     <Routes>
-      <Route element={<Layout/>}>
-      <Route element={<Main/>}>
-        <Route element={<PrivateRoutes/>}>
-        <Route path='/' element={<Dashboard/>}/>
-        <Route path='/Charts' element={<Charts/>}/>
-        <Route path='/user' element={<UserList/>}/>
-        <Route path='/user/add' element={<UserAdd/>}/>
-        <Route path='/user/edit/:id' element={<UserUpdate/>}/>
-        <Route path='/user/:id' element={<UserRead/>}/>
-        <Route path='/profile' element={<Profile/>}/>
-        <Route path='/category' element={<CategoryList/>}/>
-        <Route path='/category/add' element={<CategoryAdd/>}/>
-        <Route path='/category/edit/:id' element={<CategoryUpdate/>}/>
-        <Route path='/category/:id' element={<CategoryRead/>}/>
+      <Route element={<Layout />}>
+        <Route element={<Main />}>
+          <Route element={<PrivateRoutes />}>
+            <Route path='/' element={<Dashboard />} />
+            <Route path='/Charts' element={<Charts />} />
+            <Route path='/user' element={<UserList />} />
+            <Route path='/user/add' element={<UserAdd />} />
+            <Route path='/user/edit/:id' element={<UserUpdate />} />
+            <Route path='/user/:id' element={<UserRead />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/category' element={<CategoryList />} />
+            <Route path='/category/add' element={<CategoryAdd />} />
+            <Route path='/category/edit/:id' element={<CategoryUpdate />} />
+            <Route path='/category/:id' element={<CategoryRead />} />
 
-        <Route path='/product' element={<ProductList/>}/>
-        <Route path='/product/add' element={<ProductAdd/>}/>
-        <Route path='/product/edit/:id' element={<ProductUpdate/>}/>
-        <Route path='/product/:id' element={<ProductRead/>}/>
-  
-        <Route path='/ratings' element={<RatingList/>}/>
-        <Route path='/ratings/add' element={<RatingAdd/>}/>
-        <Route path='/ratings/edit/:id' element={<RatingUpdate/>}/>
-        <Route path='/ratings/:id' element={<RatingRead/>}/>
+            <Route path='/product' element={<ProductList />} />
+            <Route path='/product/add' element={<ProductAdd />} />
+            <Route path='/product/edit/:id' element={<ProductUpdate />} />
+            <Route path='/product/:id' element={<ProductRead />} />
 
-        <Route path='/cart' element={<CartList/>}/>
-        <Route path='/cart/add' element={<CartAdd/>}/>
-        <Route path='/cart/edit/:id' element={<CartUpdate/>}/>
-        <Route path='/cart/:id' element={<CartRead/>}/>
+            <Route path='/ratings' element={<RatingList />} />
+            <Route path='/ratings/add' element={<RatingAdd />} />
+            <Route path='/ratings/edit/:id' element={<RatingUpdate />} />
+            <Route path='/ratings/:id' element={<RatingRead />} />
 
-        <Route path='/paymentcart' element={<PaymentCartList/>}/>
-        <Route path='/paymentcart/add'element={<PaymentCartAdd/>}/>
-        <Route path='/paymentcart/edit/:id' element={<PaymentCartUpdate/>}/>
-        <Route path='/paymentcart/:id' element={<PaymentCartRead/>}/>
+            <Route path='/cart' element={<CartList />} />
+            <Route path='/cart/add' element={<CartAdd />} />
+            <Route path='/cart/edit/:id' element={<CartUpdate />} />
+            <Route path='/cart/:id' element={<CartRead />} />
 
-        <Route path='/post' element={<PostList/>}/>
-        <Route path='/post/add' element={<PostAdd/>}/>
+            <Route path='/paymentcart' element={<PaymentCartList />} />
+            <Route path='/paymentcart/add' element={<PaymentCartAdd />} />
+            <Route path='/paymentcart/edit/:id' element={<PaymentCartUpdate />} />
+            <Route path='/paymentcart/:id' element={<PaymentCartRead />} />
+
+            <Route path='/post' element={<PostList />} />
+            <Route path='/post/add' element={<PostAdd />} />
+            <Route path='/post/api/:id' element={<PostRead />} />
+            <Route path='/post/edit/api/:id' element={<PostUpdate />} />
+          </Route>
+        </Route>
+        <Route element={<PublicRoutes />}>
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
         </Route>
       </Route>
-      <Route element={<PublicRoutes/>}>
-      <Route path='/login' element={<Login/>}/>
-      <Route path='/register' element={<Register/>}/>
-      </Route>
-      </Route>
-      <Route path='*' element={<PageNotFound/>}/>
+      <Route path='*' element={<PageNotFound />} />
     </Routes>
-    
+
   );
 }
 

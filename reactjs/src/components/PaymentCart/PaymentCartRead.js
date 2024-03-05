@@ -28,7 +28,7 @@ const PaymentCartRead = () => {
     return (
         <div id='layoutSidenav_content'>
             <main>
-                <div class='container-fluid px-4'>
+                <div className='container-fluid px-4'>
                     <h1 className='mt-4'>Read PaymentCart</h1>
                     <ol className='breadcrumb mb-4'>
                         <li className='breadcrumb-item'><Link to='/'>Dashboard</Link></li>

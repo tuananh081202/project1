@@ -2,24 +2,24 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { formatDateTime } from '../../helpers/common'
 import requestApi from '../../helpers/Api'
-import { Modal,Button } from 'react-bootstrap'
+import { Modal, Button } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import * as actions from '../../redux/actions'
 import { CSVLink } from 'react-csv'
 import Table from '../Table/Table'
 const PostList = () => {
     const dispatch = useDispatch();
-    const [post,setPost]= useState([])
+    const [post, setPost] = useState([])
     const [numOfPage, setNumofPage] = useState(1)
-    const [currentPage,setCurrentPage]= useState(1)
-    const [itemsPerPage,setItemPerPage] = useState(1)
-    const [searchString,setSearchString] = useState('')
+    const [currentPage, setCurrentPage] = useState(1)
+    const [itemsPerPage, setItemPerPage] = useState(1)
+    const [searchString, setSearchString] = useState('')
     const [deleteItem, setDeleteItem] = useState(null)
     const [showModal, setShowModal] = useState(false)
     const [deleteType, setDeleteType] = useState('single')
-    const [refresh,setRefresh] = useState(Date.now())
+    const [refresh, setRefresh] = useState(Date.now())
     const [selectedRows, setSelectedRows] = useState([])
-    const [dataExport,setDataExport] = useState([])
+    const [dataExport, setDataExport] = useState([])
     const columns = [
         {
             name: 'ID',
@@ -31,7 +31,7 @@ const PostList = () => {
         },
         {
             name: 'Description',
-            element: row => row.description 
+            element: row => row.description
         },
         {
             name: 'Thumbnail',
@@ -78,54 +78,54 @@ const PostList = () => {
         setDeleteType('single')
     }
 
-    const requestDeleteApi = () =>{
-        if(deleteType === 'single'){
-        dispatch(actions.controlLoading(true))
-         requestApi(`/post/${deleteItem}`,'DELETE',[]).then(response =>{
-             setShowModal(false)
-             setRefresh(Date.now())
-             dispatch(actions.controlLoading(false))
-         }).catch(err => {
-             console.log(err)
-             setShowModal(false)
-             dispatch(actions.controlLoading(false))
-         })
-     } else {
-         dispatch(actions.controlLoading(true))
-         requestApi(`/post/multiple?ids=${selectedRows.toString()}`, 'DELETE', []).then(response => {
-             setShowModal(false)
-             setRefresh(Date.now())
-             setSelectedRows([])
-             dispatch(actions.controlLoading(false))
-         }).catch(err => {
-             console.log(err)
-             setShowModal(false)
-             dispatch(actions.controlLoading(false))
-         })
- 
-     }
- }
+    const requestDeleteApi = () => {
+        if (deleteType === 'single') {
+            dispatch(actions.controlLoading(true))
+            requestApi(`/post/${deleteItem}`, 'DELETE', []).then(response => {
+                setShowModal(false)
+                setRefresh(Date.now())
+                dispatch(actions.controlLoading(false))
+            }).catch(err => {
+                console.log(err)
+                setShowModal(false)
+                dispatch(actions.controlLoading(false))
+            })
+        } else {
+            dispatch(actions.controlLoading(true))
+            requestApi(`/post/multiple?ids=${selectedRows.toString()}`, 'DELETE', []).then(response => {
+                setShowModal(false)
+                setRefresh(Date.now())
+                setSelectedRows([])
+                dispatch(actions.controlLoading(false))
+            }).catch(err => {
+                console.log(err)
+                setShowModal(false)
+                dispatch(actions.controlLoading(false))
+            })
 
-    useEffect(()=>{
+        }
+    }
+
+    useEffect(() => {
         dispatch(actions.controlLoading(true))
         let query = `?items_per_page=${itemsPerPage}&page=${currentPage}`
-        if(searchString) {
+        if (searchString) {
             query += `&search=${searchString}`;
         }
-        requestApi(`/post${query}`,'GET',[]).then(reponse =>{
+        requestApi(`/post${query}`, 'GET', []).then(reponse => {
             setPost(reponse.data.data)
             setNumofPage(reponse.data.lastPage)
             dispatch(actions.controlLoading(false))
-        }).catch(err=>{
+        }).catch(err => {
             console.log(err)
             dispatch(actions.controlLoading(false))
         })
-    },[itemsPerPage, currentPage,searchString,refresh])
-    
+    }, [itemsPerPage, currentPage, searchString, refresh])
+
     const getPostExport = (_event, done) => {
         let result = []
         if (PostList && PostList.length > 0) {
-            result.push(['id', 'title',  'description','category.name', 'thumbnail','user.first_name', 'status', 'created_at', 'updated_at']);
+            result.push(['id', 'title', 'description', 'category.name', 'thumbnail', 'user.first_name', 'status', 'created_at', 'updated_at']);
             PostList.map(item => {
                 let arr = [];
 
@@ -165,7 +165,7 @@ const PostList = () => {
                             target="_blank"
                             asyncOnClick={true}
                             onClick={(event, done) => getPostExport(event, done)}
-                        ><i className='fa-solid fa-file-arrow-down'></i> Export Excel 
+                        ><i className='fa-solid fa-file-arrow-down'></i> Export Excel
                         </CSVLink>
 
                     </div>
@@ -178,18 +178,18 @@ const PostList = () => {
                         onPageChange={setCurrentPage}
                         onChangeItemsPerPage={setItemPerPage}
                         onKeySearch={(keyword) => {
-                            console.log('keyword in user list comp=>',keyword)
+                            console.log('keyword in user list comp=>', keyword)
                             setSearchString(keyword)
                         }}
-                        onSelectedRows={rows =>{
-                            console.log('selected row in uselist',rows)
+                        onSelectedRows={rows => {
+                            console.log('selected row in uselist', rows)
                             setSelectedRows(rows)
                         }}
 
                     />
                 </div>
             </main>
-            <Modal show={showModal} onHide={()=> setShowModal(false)} size='sm'>
+            <Modal show={showModal} onHide={() => setShowModal(false)} size='sm'>
                 <Modal.Header closeButton>
                     <Modal.Title>Confirmation</Modal.Title>
                 </Modal.Header>
