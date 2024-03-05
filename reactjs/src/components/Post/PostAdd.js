@@ -9,16 +9,16 @@ import { toast } from 'react-toastify'
 const PostAdd = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const { register, setValue, trigger, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const [thumbnail,setThumbnail] = useState('')
     const [category,setCategory]= useState([])
-    const [user, setUser] = useState([])
+    const [user, SetUser] = useState([])
     const handleSubmitFormAdd = async(data) => {
         console.log('data form=>',data)
 
         let formData = new FormData();
         for (let key in data) {
-            if (key === 'image') {
+            if (key === 'thumbnail') {
                 formData.append(key, data[key][0])
             } else {
                 formData.append(key, data[key]);
@@ -53,7 +53,7 @@ const PostAdd = () => {
         dispatch(actions.controlLoading(true))
         requestApi('/user', 'GET').then(res => {
             console.log("res=>", res)
-            setUser(res.data.data)
+            SetUser(res.data.data)
             dispatch(actions.controlLoading(false))
         }).catch(err => {
             console.log('err=>', err)
@@ -96,7 +96,7 @@ const PostAdd = () => {
                                 </div>
                                 <div className='mb-3 mt-3'>
                                     <label className='form-label'>Description:</label>
-                                    <input  {...register('descripiton', { required: 'Nhập mô tả' })} type='text' className='form-control' placeholder='Nhập tên sản phẩm' />
+                                    <input  {...register('description', { required: 'Nhập mô tả' })} type='text' className='form-control' placeholder='Nhập tên sản phẩm' />
                                     {errors.description && <p style={{ color: 'red' }}>{errors.description.message}</p>}
 
                                 </div>

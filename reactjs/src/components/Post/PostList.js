@@ -31,7 +31,7 @@ const PostList = () => {
         },
         {
             name: 'Description',
-            element: row => row.description
+            element: row => row.description 
         },
         {
             name: 'Thumbnail',
