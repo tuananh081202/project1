@@ -1,4 +1,4 @@
-import { Req, UploadedFile,Body, BadRequestException,Get, UseInterceptors, Query, Post, Param, Put, Delete } from '@nestjs/common';
+import { Req, UploadedFile,Body, BadRequestException,Get, UseInterceptors, Query, Post, Param, Put, Delete, ParseArrayPipe } from '@nestjs/common';
 import { Controller } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -92,6 +92,14 @@ export class PostController {
     deletePost(@Param('id') id:string){
         return this.PostService.delete(Number(id))
     }
+
+    @Delete(':id')
+    multipleDelete(@Query('ids',new ParseArrayPipe({items:String,separator:','})) ids: string[]){
+        console.log('delete multi=>',ids);
+        return this.PostService.multipleDelete(ids)
+    }
+
+
 
 
 

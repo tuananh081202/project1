@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Posts } from './entities/post.entity';
-import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, In, Repository, UpdateResult } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
 import { FilterPostDto } from './dto/filter-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -146,6 +146,10 @@ export class PostService {
         }
         return await this.postRepository.softDelete({id})
 
+    }
+
+    async multipleDelete(ids:string[]):Promise<DeleteResult>{
+        return await this.postRepository.delete({id:In(ids)})
     }
 
 
