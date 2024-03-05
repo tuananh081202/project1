@@ -37,6 +37,7 @@ import ProductRead from './components/Product/ProductRead';
 import CartRead from './components/Cart/CartRead';
 import RatingRead from './components/Rating/RatingRead';
 import PostList from './components/Post/PostList';
+import PostAdd from './components/Post/PostAdd';
 
 function App  ()  {
   return (
@@ -77,6 +78,7 @@ function App  ()  {
         <Route path='/paymentcart/:id' element={<PaymentCartRead/>}/>
 
         <Route path='/post' element={<PostList/>}/>
+        <Route path='/post/add' element={<PostAdd/>}/>
         </Route>
       </Route>
       <Route element={<PublicRoutes/>}>

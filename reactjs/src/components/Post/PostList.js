@@ -156,7 +156,7 @@ const PostList = () => {
                         <li className='breadcrumb-item active'>Tables</li>
                     </ol>
                     <div className='mb-3'>
-                        <Link className='btn btn-sm btn-success me-2' to='/post/api/add'><i class="fa-solid fa-plus"></i>Add new</Link>
+                        <Link className='btn btn-sm btn-success me-2' to='/post/add'><i class="fa-solid fa-plus"></i>Add new</Link>
                         {selectedRows.length > 0 && <button type='button' className='btn btn-sm btn-danger'><i className='fa fa-trash'></i>Delete</button>}
                         <CSVLink
                             filename={"post.csv"}
