@@ -62,7 +62,7 @@ const PostList = () => {
             element: row => (
                 <>
                     <Link to={`/post/api/${row.id}`} className='btn btn-sm btn-info me-1'><i class='fa-solid fa-book'></i> Read </Link>
-                    <Link to={`/post/api/edit/${row.id}`} className='btn btn-sm btn-warning me-1' ><i className="fa fa-pencil"></i> Edit </Link>
+                    <Link to={`/post/edit/api/${row.id}`} className='btn btn-sm btn-warning me-1' ><i className="fa fa-pencil"></i> Edit </Link>
                     <button type='button' className='btn btn-sm btn-danger me-1' onClick={() => handleDelete(row.id)}><i className='fa fa-trash'></i> Delete</button>
 
                 </>
@@ -81,7 +81,7 @@ const PostList = () => {
     const requestDeleteApi = () => {
         if (deleteType === 'single') {
             dispatch(actions.controlLoading(true))
-            requestApi(`/post/${deleteItem}`, 'DELETE', []).then(response => {
+            requestApi(`/post/api/${deleteItem}`, 'DELETE', []).then(response => {
                 setShowModal(false)
                 setRefresh(Date.now())
                 dispatch(actions.controlLoading(false))
@@ -157,7 +157,7 @@ const PostList = () => {
                     </ol>
                     <div className='mb-3'>
                         <Link className='btn btn-sm btn-success me-2' to='/post/add'><i class="fa-solid fa-plus"></i>Add new</Link>
-                        {selectedRows.length > 0 && <button type='button' className='btn btn-sm btn-danger'><i className='fa fa-trash'></i>Delete</button>}
+                        {selectedRows.length > 0 && <button type='button' className='btn btn-sm btn-danger me-1'><i className='fa fa-trash'></i>Delete</button>}
                         <CSVLink
                             filename={"post.csv"}
                             className="btn btn-sm btn-primary me-1"
