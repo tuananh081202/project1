@@ -1,3 +1,4 @@
+import { Post } from 'src/post/entities/post.entity';
 import { Rating } from 'src/rating/entities/rating.entity';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn,OneToMany } from 'typeorm';
 
@@ -39,7 +40,10 @@ export class User {
   @DeleteDateColumn()
   deleted_at?:Date;
   
-   @OneToMany(() => Rating, (rating) => rating.user)
-    ratings: Rating[];
+  @OneToMany(() => Rating, (rating) => rating.user)
+  ratings: Rating[];
+
+  @OneToMany(() => Post,(post)=> post.user)
+  posts: Post
 
 }

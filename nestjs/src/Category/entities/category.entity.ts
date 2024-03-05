@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, ManyToOne, OneToMany } from 'typeorm';
 import { Product } from 'src/Products/entities/product.entity';
+import { Post } from 'src/post/entities/post.entity';
 
 @Entity()
 export class Category {
@@ -23,5 +24,8 @@ export class Category {
     
     @OneToMany(() => Product, (product) => product.category)
     product: Product;
+
+    @OneToMany(() => Post,(post)=> post.category)
+    posts: Post
   
 }

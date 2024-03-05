@@ -152,7 +152,6 @@ const UserTable = (props) => {
                                 </ul>
                             </div>
                         </div>
-
                     )}
 
                 </div>
