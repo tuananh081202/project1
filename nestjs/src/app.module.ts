@@ -11,10 +11,6 @@ import { ProductModule } from './Products/product.module';
 import { RatingModule } from './rating/rating.module';
 import { CartModule } from './cart/cart.module';
 import { PaymentcartModule } from './PaymentCart/paymentcart.module';
-import { MailerModule } from '@nestjs-modules/mailer';
-import { join } from 'path';
-import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
-
 import { PostModule } from './post/post.module';
 
 @Module({
