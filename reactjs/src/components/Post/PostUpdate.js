@@ -10,7 +10,7 @@ import { toast } from 'react-toastify'
 
 const PostUpdate = () => {
     const dispatch = useDispatch()
-    const { register, setValue,  handleSubmit, formState: { errors } } = useForm();
+    const { register,   handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate()
     const [category, SetCategory] = useState([])
     const [user, setUser] = useState([])
@@ -43,6 +43,18 @@ const PostUpdate = () => {
 
     useEffect(() => {
         dispatch(actions.controlLoading(true))
+        requestApi('/user', 'GET').then(res => {
+            console.log("res=>", res)
+            setUser(res.data.data)
+            dispatch(actions.controlLoading(false))
+        }).catch(err => {
+            console.log('err=>', err)
+            dispatch(actions.controlLoading(false))
+        })
+    }, [])
+
+    useEffect(() => {
+        dispatch(actions.controlLoading(true))
         requestApi('/category', 'GET').then(res => {
             console.log("res=>", res)
             SetCategory(res.data.data)
@@ -53,17 +65,6 @@ const PostUpdate = () => {
         })
     }, [])
 
-    useEffect(() => {
-        dispatch(actions.controlLoading(true))
-        requestApi('/user', 'GET').then(res => {
-            console.log("res=>", res)
-            setUser(res.data.data)
-            dispatch(actions.controlLoading(false))
-        }).catch(err => {
-            console.log('err=>', err)
-            dispatch(actions.controlLoading(false))
-        })
-    }, [])
 
     const onThumbnailChange = (event) => {
         if (event.target.files && event.target.files[0]) {
