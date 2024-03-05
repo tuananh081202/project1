@@ -7,7 +7,7 @@ export class FilterPostDto {
     search:string
 
     @IsOptional()
-    @Matches(/^\d+$/, { message: 'Category name cannot be empty.' })
+    @Matches(/^\d+$/, { message: 'Category name cannot be empty.' })//kiểm tra giá trị của thuộc tính category
     category?:string
 
     @IsOptional()

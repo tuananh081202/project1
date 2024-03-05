@@ -1,11 +1,11 @@
 import { Category } from "src/Category/entities/category.entity";
 import { User } from "src/user/entities/user.entity";
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 
 
 @Entity()
-export class Post {
+export class Posts {
     @PrimaryGeneratedColumn()
     id: number
 
@@ -26,6 +26,9 @@ export class Post {
 
     @UpdateDateColumn()
     updated_at:Date
+
+    @DeleteDateColumn()
+    deleted_at:Date
 
     @ManyToOne(() => User,(user) => user.posts,{
         onDelete:'CASCADE'

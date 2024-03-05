@@ -1,17 +1,19 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Post } from './entities/post.entity';
-import { Repository } from 'typeorm';
+import { Posts } from './entities/post.entity';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { CreatePostDto } from './dto/create-post.dto';
 import { FilterPostDto } from './dto/filter-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
+import * as fs from 'fs'
 
 @Injectable()
 export class PostService {
     constructor(
-        @InjectRepository(Post) private postRepository: Repository<Post>
+        @InjectRepository(Posts) private postRepository: Repository<Posts>
     ) { }
 
-    async create(CreatePostDto: CreatePostDto): Promise<Post> {
+    async create(CreatePostDto: CreatePostDto): Promise<Posts> {
         return await this.postRepository.save(CreatePostDto)
     }
 
@@ -77,4 +79,74 @@ export class PostService {
             lastPage,
         };
     }
+
+    async findOne(id: number): Promise<Posts> {
+        return await this.postRepository.findOne({
+            where: { id },
+            relations: {
+                category: true,
+                user: true,
+            },
+            select: {
+                id: true,
+                title: true,
+                description: true,
+                thumbnail: true,
+                status: true,
+                created_at: true,
+                updated_at: true,
+                category: {
+                    id: true,
+                    name: true,
+                    description: true,
+                    created_at: true,
+                    updated_at: true,
+                },
+                user: {
+                    id: true,
+                    first_name: true,
+                    last_name: true,
+                    email: true,
+                    avatar: true,
+                    status: true,
+                    created_at: true,
+                    updated_at: true,
+
+                }
+
+
+            }
+        })
+    }
+
+    async update(id:number,UpdatePostDto:UpdatePostDto):Promise<UpdateResult>{
+        const post = await this.postRepository.findOneBy({id})
+        if(!post){
+            throw new NotFoundException('Không cập nhật được bưu kiện')
+        }
+        if(UpdatePostDto.thumbnail){
+            const imagePath = post.thumbnail;
+            if(fs.existsSync(imagePath)){
+
+                fs.unlinkSync(imagePath);
+
+            }
+        }
+        return await this.postRepository.update(id,UpdatePostDto)
+    }
+
+    async delete(id: number):Promise<DeleteResult>{
+        const post = await this.postRepository.findOneBy({id})
+        if(!post){
+            throw new NotFoundException('Không tồn tại bưu kiện')
+        }
+        const imagePath = post.thumbnail
+        if(fs.existsSync(imagePath)){
+            fs.unlinkSync(imagePath);
+        }
+        return await this.postRepository.softDelete({id})
+
+    }
+
+
 }

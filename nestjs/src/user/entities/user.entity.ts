@@ -1,4 +1,4 @@
-import { Post } from 'src/post/entities/post.entity';
+import { Posts } from 'src/post/entities/post.entity';
 import { Rating } from 'src/rating/entities/rating.entity';
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn,OneToMany } from 'typeorm';
 
@@ -43,7 +43,7 @@ export class User {
   @OneToMany(() => Rating, (rating) => rating.user)
   ratings: Rating[];
 
-  @OneToMany(() => Post,(post)=> post.user)
-  posts: Post
+  @OneToMany(() => Posts,(post)=> post.user)
+  posts: Posts
 
 }
