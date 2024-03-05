@@ -85,6 +85,18 @@ const Sidebar = () => {
                                    
                                 </nav>
                             </div>
+                            <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePost" aria-expanded="false" aria-controls="collapsePost">
+                                <div className="sb-nav-link-icon"><i className="fas fa-columns"></i></div>
+                                Post
+                                <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
+                            </a>
+                            <div className="collapse" id="collapsePost" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav className="sb-sidenav-menu-nested nav">
+                                    <Link to='/post/api/add' className='nav-link'>Add Post</Link>
+                                    <Link to='/post' className='nav-link'>List Post</Link>
+                                   
+                                </nav>
+                            </div>
                             <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                                 <div className="sb-nav-link-icon"><i className="fas fa-book-open"></i></div>
                                 Pages

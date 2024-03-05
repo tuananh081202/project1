@@ -36,6 +36,7 @@ import CategoryRead from './components/Category/CategoryRead';
 import ProductRead from './components/Product/ProductRead';
 import CartRead from './components/Cart/CartRead';
 import RatingRead from './components/Rating/RatingRead';
+import PostList from './components/Post/PostList';
 
 function App  ()  {
   return (
@@ -74,6 +75,8 @@ function App  ()  {
         <Route path='/paymentcart/add'element={<PaymentCartAdd/>}/>
         <Route path='/paymentcart/edit/:id' element={<PaymentCartUpdate/>}/>
         <Route path='/paymentcart/:id' element={<PaymentCartRead/>}/>
+
+        <Route path='/post' element={<PostList/>}/>
         </Route>
       </Route>
       <Route element={<PublicRoutes/>}>
