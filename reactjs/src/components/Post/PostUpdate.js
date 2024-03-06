@@ -5,16 +5,17 @@ import { useDispatch } from 'react-redux'
 import * as actions from '../../redux/actions'//chứa các hành động redux
 import requestApi from '../../helpers/Api';//xử lý yêu cầu api
 import { toast } from 'react-toastify'
-
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const PostUpdate = () => {
     const dispatch = useDispatch()
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, setValue, trigger, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate()
     const [category, SetCategory] = useState([])
-    const [user, setUser] = useState([])
+    // const [user, setUser] = useState([])
     const params = useParams()
-    const [productData, setProductData] = useState({})
+    const [postData, setPostData] = useState({})
     const handleSubmitFormUpdate = async (data) => {
         console.log('data form=>', data)
 
@@ -42,26 +43,27 @@ const PostUpdate = () => {
 
     useEffect(() => {
         dispatch(actions.controlLoading(true))
-        requestApi('/user', 'GET').then(res => {
-            console.log("res=>", res)
-            setUser(res.data.data)
-            dispatch(actions.controlLoading(false))
-        }).catch(err => {
-            console.log('err=>', err)
-            dispatch(actions.controlLoading(false))
-        })
-    }, [])
+        try {
+            const renderData = async () => {
+                const res = await requestApi('/category', 'GET');
+                console.log('res=>',res)
+                SetCategory(res.data.data);
+                const detailPost = await requestApi(`/post/api/${params.id}`, 'GET');
+                console.log("detailPost=>", detailPost)
+                const fields = ['title','summary', 'description', 'thumbnail', 'category', 'status'];
+                fields.forEach(field => {
 
-    useEffect(() => {
-        dispatch(actions.controlLoading(true))
-        requestApi('/category', 'GET').then(res => {
-            console.log("res=>", res)
-            SetCategory(res.data.data)
-            dispatch(actions.controlLoading(false))
-        }).catch(err => {
+                    setValue(field, detailPost.data[field])// đặt giá cho mỗi trường = setvalue
+                })
+                setPostData({ ...detailPost.data, thumbnail: process.env.REACT_APP_API_URL + '/' + detailPost.data.thum })
+                dispatch(actions.controlLoading(false))
+
+            }
+            renderData();
+        } catch (err) {
             console.log('err=>', err)
             dispatch(actions.controlLoading(false))
-        })
+        }
     }, [])
 
 
@@ -69,7 +71,7 @@ const PostUpdate = () => {
         if (event.target.files && event.target.files[0]) {
             let reader = new FileReader();//file reader cho phép đọc file bất đồng bộ
             reader.onload = (e) => {
-                setProductData({ ...productData, thumbnail: reader.result })
+                setPostData({ ...postData, thumbnail: reader.result })
             };
             reader.readAsDataURL(event.target.files[0]);
         }
@@ -101,14 +103,32 @@ const PostUpdate = () => {
                                             {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
                                         </div>
                                         <div className='mb-3 mt-3'>
+                                            <label className='form-label'>Summary:</label>
+                                            <textarea rows={4}  {...register('summary', { required: 'Thêm bản tóm tắt.' })} type='text' className='form-control' placeholder='Nhập tóm tắt' />
+                                            {errors.summary && <p style={{ color: 'red' }}>{errors.summary.message}</p>}
+                                        </div>
+                                        <div className='mb-3 mt-3'>
                                             <label className='form-label'>Description:</label>
-                                            <input  {...register('description', { required: 'Nhập mô tả' })} type='text' className='form-control' placeholder='Nhập tên sản phẩm' />
-                                            {errors.description && <p style={{ color: 'red' }}>{errors.description.message}</p>}
+                                            <CKEditor
+                                                editor={ClassicEditor}
+                                                onReady={editor => {
+                                                    // You can store the "editor" and use when it is needed.
+                                                    register('description',{required:'Description is required!'})
+                                                }}
+                                               
+                                                onChange={(event, editor) => {
+                                                    const data = editor.getData()
+                                                    console.log('data=>',data)
+                                                    setValue('description',data)
+                                                    trigger('description')
+                                                }}
+                                                
+                                            />
 
                                         </div>
                                         <div className='mb-3 mt-3'>
                                             <label className='form-label'>Thumbnail: </label><br />
-                                            {productData.thumbnail && <img style={{ width: '300px' }} src={productData.thumbnail} className='mb-2' alt='...' />}
+                                            {postData.thumbnail && <img style={{ width: '300px' }} src={postData.thumbnail} className='mb-2' alt='...' />}
                                             <div className='input-file'>
                                                 <label htmlFor='file' className='btn-file btn-sm btn btn-primary'>Browse File</label>
                                                 <input id='file' type='file' name='thumbnail' {...register('thumbnail', { required: 'Nhập ảnh ', onChange: onThumbnailChange })} className='form-control' accept='image/*' />
@@ -127,7 +147,7 @@ const PostUpdate = () => {
                                             {errors.category && <p style={{ color: 'red' }}>{errors.category.message}</p>}
                                         </div>
 
-                                        <div className='mb-3 mt-3'>
+                                        {/* <div className='mb-3 mt-3'>
                                             <label className='form-label'>User:</label>
                                             <select {...register('user', { required: 'chọn người dùng' })} className='form-select'>
                                                 <option value="">--Chọn người dùng--</option>
@@ -136,7 +156,7 @@ const PostUpdate = () => {
                                                 })}
                                             </select>
                                             {errors.user && <p style={{ color: 'red' }}>{errors.user.message}</p>}
-                                        </div>
+                                        </div> */}
 
                                         <div className='mb-3 mt-3'>
                                             <label className='form-label'>Status:</label>

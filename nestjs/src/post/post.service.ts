@@ -46,6 +46,7 @@ export class PostService {
             .select([
                 'post.id',
                 'post.title',
+                'post.summary',
                 'post.description',
                 'post.thumbnail',
                 'post.status',
@@ -91,6 +92,7 @@ export class PostService {
             select: {
                 id: true,
                 title: true,
+                summary: true,
                 description: true,
                 thumbnail: true,
                 status: true,

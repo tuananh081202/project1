@@ -5,11 +5,13 @@ import { useDispatch } from 'react-redux'
 import * as actions from '../../redux/actions'
 import requestApi from '../../helpers/Api';
 import { toast } from 'react-toastify'
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const PostAdd = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, setValue, trigger, handleSubmit, formState: { errors } } = useForm();
     const [thumbnail, setThumbnail] = useState('')
     const [category, setCategory] = useState([])
     const [user, SetUser] = useState([])
@@ -95,9 +97,27 @@ const PostAdd = () => {
                                             {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
                                         </div>
                                         <div className='mb-3 mt-3'>
+                                            <label className='form-label'>Summary:</label>
+                                            <input  {...register('summary', { required: 'Thêm bản tóm tắt.' })} type='text' className='form-control' placeholder='Nhập tóm tắt' />
+                                            {errors.summary && <p style={{ color: 'red' }}>{errors.summary.message}</p>}
+                                        </div>
+                                        <div className='mb-3 mt-3'>
                                             <label className='form-label'>Description:</label>
-                                            <input  {...register('description', { required: 'Nhập mô tả' })} type='text' className='form-control' placeholder='Nhập tên sản phẩm' />
-                                            {errors.description && <p style={{ color: 'red' }}>{errors.description.message}</p>}
+                                            <CKEditor
+                                                editor={ClassicEditor}
+                                                onReady={editor => {
+                                                    // You can store the "editor" and use when it is needed.
+                                                    register('description',{required:'Description is required!'})
+                                                }}
+                                               
+                                                onChange={(event, editor) => {
+                                                    const data = editor.getData()
+                                                    console.log('data=>',data)
+                                                    setValue('description',data)
+                                                    trigger('description')
+                                                }}
+                                                
+                                            />
 
                                         </div>
                                         <div className='mb-3 mt-3'>

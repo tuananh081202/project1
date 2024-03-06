@@ -13,6 +13,9 @@ export class Posts {
     title: string
 
     @Column()
+    summary: string
+
+    @Column({type:'longtext'})
     description: string
 
     @Column()

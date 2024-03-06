@@ -30,21 +30,25 @@ const PostList = () => {
             element: row => row.title
         },
         {
-            name: 'Description',
-            element: row => row.description
+            name: 'Summary',
+            element: row => row.summary
         },
+        // {
+        //     name: 'Description',
+        //     element: row => row.description
+        // },
         {
             name: 'Thumbnail',
             element: row => <img width="100px" src={process.env.REACT_APP_API_URL + '/' + row.thumbnail} />
         },
-        {
-            name: 'Category',
-            element: row => row.category.name
-        },
-        {
-            name: 'User',
-            element: row => row.user.first_name
-        },
+        // {
+        //     name: 'Category',
+        //     element: row => row.category.name
+        // },
+        // {
+        //     name: 'User',
+        //     element: row => row.user.first_name
+        // },
         {
             name: 'Status',
             element: row => row.status == 1 ? "Active" : 'Inactive'
