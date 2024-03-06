@@ -22,7 +22,7 @@ const PostUpdate = () => {
         let formData = new FormData();
         for (let key in data) {
             if (key === 'thumbnail') {
-                if (data.image[0] instanceof File)
+                if (data.thumbnail[0] instanceof File)
                     formData.append(key, data[key][0])
             } else {
                 formData.append(key, data[key]);

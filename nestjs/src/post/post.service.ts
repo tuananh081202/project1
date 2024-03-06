@@ -48,6 +48,7 @@ export class PostService {
                 'post.title',
                 'post.description',
                 'post.thumbnail',
+                'post.status',
                 'post.created_at',
                 'post.updated_at',
                 'category.id',
