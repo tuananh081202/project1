@@ -5,7 +5,7 @@ import { CreateRatingDto } from './dto/create-rating.dto';
 import { UpdateRatingDto } from './dto/update-rating.dto';
 import { FilterRatingDto } from './dto/filter-rating.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { Roles } from 'src/auth/roles.decorater';
+import { Roles } from 'src/auth/decorator/roles.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
 
 

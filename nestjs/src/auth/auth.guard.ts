@@ -11,6 +11,8 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
+import { privateDecrypt } from 'crypto';
+import { Reflector } from '@nestjs/core';
 
 
   @Injectable()
@@ -18,12 +20,23 @@ import { Repository } from 'typeorm';
     constructor(
       private jwtService: JwtService,
       private configService:ConfigService,
-      @InjectRepository(User) private userRepository:Repository<User>
+      @InjectRepository(User) private userRepository:Repository<User>,
+      private reflector : Reflector
        
       ) {}
   
     async canActivate(context: ExecutionContext): Promise<boolean> {
       console.log("Vao Authguard =======>set user vào request")
+
+      const isPublic = this.reflector.getAllAndOverride<string[]>('isPublic',[
+        context.getHandler(),
+        context.getClass()
+    ])
+    if(isPublic){
+      return true;
+    }
+      console.log("isPublic=> ",isPublic)
+   
       const request = context.switchToHttp().getRequest();
       const token = this.extractTokenFromHeader(request);
       if (!token) {

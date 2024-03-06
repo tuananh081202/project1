@@ -9,9 +9,9 @@ import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { storageConfig } from 'helpers/config';
 import { extname } from 'path';
-import { Roles } from 'src/auth/roles.decorater';
-import { RolesGuard } from 'src/auth/roles.guard';
 
+// import { RolesGuard } from 'src/auth/roles.guard';
+import { Roles } from 'src/auth/decorator/roles.decorator';
 
 
 @ApiBearerAuth()
@@ -20,8 +20,9 @@ import { RolesGuard } from 'src/auth/roles.guard';
 export class UserController {
     constructor(private userService: UserService) { }
 
-    @UseGuards(AuthGuard)
-    @SetMetadata('roles',['Admin'])
+    // @UseGuards(AuthGuard)
+    @Roles('Admin')
+    // @SetMetadata('roles',['Admin'])
     @ApiQuery({name:'page'})
     @ApiQuery({name:'items_per_page'})
     @ApiQuery({name:'search'})
@@ -29,40 +30,43 @@ export class UserController {
     findAll(@Query()query:FilterUserDto): Promise<User> {
         return this.userService.findAll(query);
     }
-    @UseGuards(AuthGuard)
+    // @UseGuards(AuthGuard)
+    @Roles('Admin')
     @Get('profile')
     profile(@Req() req:any):Promise<User>{
         return this.userService.findOne(Number(req.user_data.id))
     }
 
-    @UseGuards(AuthGuard)
-    
+    // @UseGuards(AuthGuard)
+    @Roles('Admin')
     @Get(':id')
-    
     findOne(@Param('id') id:string):Promise<User> {
         return this.userService.findOne(Number(id));
     }
 
-    @UseGuards(AuthGuard)
-    @UseGuards(RolesGuard)
+    // @UseGuards(AuthGuard)
+    @Roles('Admin')
+
     @Post('create')
     createUser(@Body() createUserDto:CreateUserDto):Promise<User> {
         return this.userService.create(createUserDto)
     }
 
-    @UseGuards(AuthGuard)
+    // @UseGuards(AuthGuard)
+    @Roles('Admin')
     @Put(':id')
     update(@Param('id') id:string,@Body()updateUserDto:UpdateUserDto){
        return this.userService.update(Number(id),updateUserDto)
     }
-    
+
+    @Roles('Admin')
     @Delete(':id')
     multipleDelete(@Query('ids',new ParseArrayPipe({items:String, separator:','})) ids: string[]) {
         console.log("delete multi=>",ids);
         return this.userService.multipleDelete(ids)
     }
 
-    @UseGuards(AuthGuard)
+    @Roles('Admin')
     @Delete(':id')
     delete(@Param('id') id: string) {
         return this.userService.delete(Number(id));
