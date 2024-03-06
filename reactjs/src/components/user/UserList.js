@@ -152,7 +152,7 @@ const UserList = () => {
                     </ol>
                     <div className='mb-3'>
                         <Link className='btn btn-sm btn-success me-2' to='/user/add'><i className='fa fa-plus'></i>Add new</Link>
-                        {selectedRows.length > 0 && <button type='button' className='btn btn-sm btn-danger' onClick={handleMultiDelete}><i className='fa fa-trash'></i>Delete</button>}
+                        {selectedRows.length > 0 && <button type='button' className='btn btn-sm btn-danger me-2' onClick={handleMultiDelete}><i className='fa fa-trash'></i>Delete</button>}
                         <CSVLink
                             filename={"user.csv"}
                             className="btn btn-sm btn-primary me-1"

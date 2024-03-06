@@ -5,7 +5,7 @@ import { Category } from "./entities/category.entity";
 import { FilterProductDto } from "../Products/dto/filter-product.dto";
 import { CategoryService } from "./category.service";
 import { ApiTags } from "@nestjs/swagger";
-
+import { Roles } from "src/auth/decorator/roles.decorator";
 @ApiTags('Category')
 @Controller('category')
 export class CategoryController {
@@ -26,6 +26,8 @@ export class CategoryController {
     async updateCategory(@Param('id') id: string, @Body() UpdateCategoryDto: UpdateCategoryDto) {
         return await this.categoryService.updateCategory(Number(id), UpdateCategoryDto);
     }
+
+    @Roles('Admin')
 
     @Get(':id')
 
