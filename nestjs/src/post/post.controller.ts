@@ -8,7 +8,6 @@ import { storageConfig } from 'helpers/config';
 import { extname } from 'path';
 import { FilterPostDto } from './dto/filter-post.dto';
 import { Posts } from './entities/post.entity';
-import { UpdateCartDto } from 'src/cart/dto/update-cart.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 
 

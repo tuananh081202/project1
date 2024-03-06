@@ -12,6 +12,10 @@ import { RatingModule } from './rating/rating.module';
 import { CartModule } from './cart/cart.module';
 import { PaymentcartModule } from './PaymentCart/paymentcart.module';
 import { PostModule } from './post/post.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './auth/roles.guard';
+import { AuthGuard } from './auth/auth.guard';
+import { User } from './user/entities/user.entity';
 
 @Module({
   imports: [
@@ -20,40 +24,24 @@ import { PostModule } from './post/post.module';
     UserModule, 
     AuthModule,
     ConfigModule.forRoot(),
-    // MailerModule.forRootAsync({
-    //   imports: [ConfigModule],
-    //   useFactory: async (config: ConfigService) =>({
-    //     transport: {
-    //       host: config.get('MAIL_HOST'),
-    //       secure: false,
-    //       auth:{
-    //         user:config.get('MAIL_USER'),
-    //         pass:config.get('MAIL_PASSWORD')
-    //       },
-    //     },
-    //     defaults:{
-    //       from: `"No Reply"<${config.get('MAIL_FROM')}>`
-    //     },
-    //     template: {
-    //       dir: join(__dirname,'src/templates/email'),
-    //       adapter: new HandlebarsAdapter(),
-    //       options:{
-    //         strict: true,
-    //       }
-    //     }
-    //   }),
-    //   inject:[ConfigService]
-    // }),
     CategoryModule,
     ProductModule,
     RatingModule,
     CartModule,
     PaymentcartModule,
     PostModule,
-    
- 
+    TypeOrmModule.forFeature([User])
   ],
   controllers: [AppController, ],
-  providers:[AppService, ],
+  providers:[AppService,
+  {
+    provide:APP_GUARD,
+    useClass: AuthGuard
+  },
+  {
+    provide:APP_GUARD,
+    useClass: RolesGuard
+  } 
+],
 })
 export class AppModule {}

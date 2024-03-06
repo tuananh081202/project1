@@ -34,6 +34,7 @@ export class UserService {
                 'user.email',
                 'user.avatar',
                 'user.status',
+                'user.roles',
                 'user.created_at',
                 'user.updated_at',
             ])

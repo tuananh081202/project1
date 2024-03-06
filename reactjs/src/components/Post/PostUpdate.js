@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
@@ -10,7 +9,7 @@ import { toast } from 'react-toastify'
 
 const PostUpdate = () => {
     const dispatch = useDispatch()
-    const { register,   handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate()
     const [category, SetCategory] = useState([])
     const [user, setUser] = useState([])

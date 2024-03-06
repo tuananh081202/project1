@@ -13,9 +13,7 @@ import { Roles } from 'src/auth/roles.decorater';
 import { RolesGuard } from 'src/auth/roles.guard';
 
 
-export enum Role {
-    ADMIN = 'admin'
-}
+
 @ApiBearerAuth()
 @ApiTags('User')
 @Controller('user')
@@ -24,6 +22,9 @@ export class UserController {
 
     @UseGuards(AuthGuard)
     @SetMetadata('roles',['Admin'])
+    @ApiQuery({name:'page'})
+    @ApiQuery({name:'items_per_page'})
+    @ApiQuery({name:'search'})
     @Get()
     findAll(@Query()query:FilterUserDto): Promise<User> {
         return this.userService.findAll(query);
@@ -45,7 +46,6 @@ export class UserController {
     @UseGuards(AuthGuard)
     @UseGuards(RolesGuard)
     @Post('create')
-    @Roles(Role.ADMIN)
     createUser(@Body() createUserDto:CreateUserDto):Promise<User> {
         return this.userService.create(createUserDto)
     }
