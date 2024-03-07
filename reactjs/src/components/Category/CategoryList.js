@@ -4,7 +4,7 @@ import requestApi from '../../helpers/Api';
 import { useDispatch } from 'react-redux'
 import * as actions from '../../redux/actions'
 import { Button, Modal } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { formatDateTime } from '../../helpers/common';
 // import { toast } from 'react-toastify';
 // import Papa from 'papaparse'
@@ -22,6 +22,7 @@ const CategoryList = () => {
     const [deleteType, setDeleteType] = useState('single')
     const [showModal, setShowModal] = useState(false)
     const [refresh, setRefresh] = useState(Date.now())
+    const params = useParams()
     const columns = [
         {
             name: "ID",
@@ -65,11 +66,14 @@ const CategoryList = () => {
         setDeleteType('single')
     }
 
+   
     const handleMultiDelete = () => {
         console.log('multi delete =>', selectedRows)
         setShowModal(true)
         setDeleteType("multi")
     }
+
+    
 
     const requestDeleteApi = () => {
         if (deleteType === 'single') {

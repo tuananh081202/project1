@@ -2,8 +2,6 @@ import { Category } from "src/Category/entities/category.entity";
 import { User } from "src/user/entities/user.entity";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
-
-
 @Entity()
 export class Posts {
     @PrimaryGeneratedColumn()

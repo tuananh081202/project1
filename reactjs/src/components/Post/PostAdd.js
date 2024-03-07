@@ -64,6 +64,7 @@ const PostAdd = () => {
     //     })
     // }, [])
     
+    //createUploadAdapter là thuộc tính của plugin FileRepository tạo ra một đối tượng chịu trách nhiệm xử lý tải lên tệp.
     function uploadPlugin( editor){
         editor.plugins.get('FileRepository').createUploadAdapter = (loader) =>{
             return new CustomUploadAdapter(loader)
@@ -78,6 +79,8 @@ const PostAdd = () => {
             reader.readAsDataURL(event.target.files[0]);
         }
     }
+
+    
     return (
         <div id="layoutSidenav_content">
             <main>

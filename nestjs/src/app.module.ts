@@ -16,6 +16,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/roles.guard';
 import { AuthGuard } from './auth/auth.guard';
 import { User } from './user/entities/user.entity';
+import { MailerModule } from './mailer/mailer.module';
 
 @Module({
   imports: [
@@ -30,7 +31,8 @@ import { User } from './user/entities/user.entity';
     CartModule,
     PaymentcartModule,
     PostModule,
-    TypeOrmModule.forFeature([User])
+    TypeOrmModule.forFeature([User]),
+    MailerModule
   ],
   controllers: [AppController, ],
   providers:[AppService,
@@ -41,7 +43,8 @@ import { User } from './user/entities/user.entity';
   {
     provide:APP_GUARD,
     useClass: RolesGuard
-  } 
+  },
+  
 ],
 })
 export class AppModule {}
