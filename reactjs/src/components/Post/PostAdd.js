@@ -7,6 +7,7 @@ import requestApi from '../../helpers/Api';
 import { toast } from 'react-toastify'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import CustomUploadAdapter from '../../helpers/CustomUploadAdapter'
 
 const PostAdd = () => {
     const dispatch = useDispatch()
@@ -14,7 +15,7 @@ const PostAdd = () => {
     const { register, setValue, trigger, handleSubmit, formState: { errors } } = useForm();
     const [thumbnail, setThumbnail] = useState('')
     const [category, setCategory] = useState([])
-    const [user, SetUser] = useState([])
+    // const [user, SetUser] = useState([])
     const handleSubmitFormAdd = async (data) => {
         console.log('data form=>', data)
 
@@ -51,18 +52,23 @@ const PostAdd = () => {
         })
     }, [])
 
-    useEffect(() => {
-        dispatch(actions.controlLoading(true))
-        requestApi('/user', 'GET').then(res => {
-            console.log("res=>", res)
-            SetUser(res.data.data)
-            dispatch(actions.controlLoading(false))
-        }).catch(err => {
-            console.log('err=>', err)
-            dispatch(actions.controlLoading(false))
-        })
-    }, [])
-
+    // useEffect(() => {
+    //     dispatch(actions.controlLoading(true))
+    //     requestApi('/user', 'GET').then(res => {
+    //         console.log("res=>", res)
+    //         SetUser(res.data.data)
+    //         dispatch(actions.controlLoading(false))
+    //     }).catch(err => {
+    //         console.log('err=>', err)
+    //         dispatch(actions.controlLoading(false))
+    //     })
+    // }, [])
+    
+    function uploadPlugin( editor){
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader) =>{
+            return new CustomUploadAdapter(loader)
+        }
+    }
     const onThumbnailChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             let reader = new FileReader();
@@ -116,6 +122,9 @@ const PostAdd = () => {
                                                     setValue('description',data)
                                                     trigger('description')
                                                 }}
+                                                config={{
+                                                    extraPlugins:[uploadPlugin]
+                                                }}
                                                 
                                             />
 
@@ -141,7 +150,7 @@ const PostAdd = () => {
                                             {errors.category && <p style={{ color: 'red' }}>{errors.category.message}</p>}
                                         </div>
 
-                                        <div className='mb-3 mt-3'>
+                                        {/* <div className='mb-3 mt-3'>
                                             <label className='form-label'>User:</label>
                                             <select {...register('user', { required: 'chọn người dùng' })} className='form-select'>
                                                 <option value="">--Chọn người dùng--</option>
@@ -150,7 +159,7 @@ const PostAdd = () => {
                                                 })}
                                             </select>
                                             {errors.user && <p style={{ color: 'red' }}>{errors.user.message}</p>}
-                                        </div>
+                                        </div> */}
 
                                         <div className='mb-3 mt-3'>
                                             <label className='form-label'>Status:</label>

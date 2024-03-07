@@ -7,6 +7,7 @@ import requestApi from '../../helpers/Api';//xử lý yêu cầu api
 import { toast } from 'react-toastify'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import CustomUploadAdapter from '../../helpers/CustomUploadAdapter'
 
 const PostUpdate = () => {
     const dispatch = useDispatch()
@@ -46,11 +47,11 @@ const PostUpdate = () => {
         try {
             const renderData = async () => {
                 const res = await requestApi('/category', 'GET');
-                console.log('res=>',res)
+                console.log('res=>', res)
                 SetCategory(res.data.data);
                 const detailPost = await requestApi(`/post/api/${params.id}`, 'GET');
                 console.log("detailPost=>", detailPost)
-                const fields = ['title','summary', 'description', 'thumbnail', 'category', 'status'];
+                const fields = ['title', 'summary', 'description', 'thumbnail', 'category', 'status'];
                 fields.forEach(field => {
 
                     setValue(field, detailPost.data[field])// đặt giá cho mỗi trường = setvalue
@@ -66,6 +67,11 @@ const PostUpdate = () => {
         }
     }, [])
 
+    function uploadPlugin(editor) {
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+            return new CustomUploadAdapter(loader)
+        }
+    }
 
     const onThumbnailChange = (event) => {
         if (event.target.files && event.target.files[0]) {
@@ -113,16 +119,19 @@ const PostUpdate = () => {
                                                 editor={ClassicEditor}
                                                 onReady={editor => {
                                                     // You can store the "editor" and use when it is needed.
-                                                    register('description',{required:'Description is required!'})
+                                                    register('description', { required: 'Description is required!' })
                                                 }}
-                                               
+
                                                 onChange={(event, editor) => {
                                                     const data = editor.getData()
-                                                    console.log('data=>',data)
-                                                    setValue('description',data)
+                                                    console.log('data=>', data)
+                                                    setValue('description', data)
                                                     trigger('description')
                                                 }}
-                                                
+                                                config={{
+                                                    extraPlugins: [uploadPlugin]
+                                                }}
+
                                             />
 
                                         </div>

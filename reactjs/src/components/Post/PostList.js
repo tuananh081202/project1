@@ -82,6 +82,12 @@ const PostList = () => {
         setDeleteType('single')
     }
 
+    const handleMultiDelete = () => {
+        console.log('multi delete =>', selectedRows)
+        setShowModal(true)
+        setDeleteType("multi")
+    }
+
     const requestDeleteApi = () => {
         if (deleteType === 'single') {
             dispatch(actions.controlLoading(true))
@@ -161,7 +167,7 @@ const PostList = () => {
                     </ol>
                     <div className='mb-3'>
                         <Link className='btn btn-sm btn-success me-2' to='/post/add'><i class="fa-solid fa-plus"></i>Add new</Link>
-                        {selectedRows.length > 0 && <button type='button' className='btn btn-sm btn-danger me-1'><i className='fa fa-trash'></i>Delete</button>}
+                        {selectedRows.length > 0 && <button type='button' className='btn btn-sm btn-danger me-1' onClick={handleMultiDelete}><i className='fa fa-trash'></i>Delete</button>}
                         <CSVLink
                             filename={"post.csv"}
                             className="btn btn-sm btn-primary me-1"
