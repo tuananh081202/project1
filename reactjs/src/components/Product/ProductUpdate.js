@@ -3,16 +3,17 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-// import { CKEditor } from '@ckeditor/ckeditor5-react';
-// import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import * as actions from '../../redux/actions'//chứa các hành động redux
 import requestApi from '../../helpers/Api';//xử lý yêu cầu api
 import { toast } from 'react-toastify'
+import CustomUploadAdapter from '../../helpers/CustomUploadAdapter'
 
 
 const ProductUpdate = () => {
     const dispatch = useDispatch()
-    const { register, setValue,  handleSubmit, formState: { errors } } = useForm();
+    const { register, setValue,trigger,  handleSubmit, formState: { errors } } = useForm();
     const navigate = useNavigate()
     //const [image, SetImage] = useState('')
     const [category, SetCategory] = useState([])
@@ -68,6 +69,12 @@ const ProductUpdate = () => {
         }
     }, [])
 
+    function uploadPlugin(editor){
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader) =>{
+            return new CustomUploadAdapter(loader)
+        }
+    }
+
     const onImageChange = (event) => {
         if (event.target.files && event.target.files[0]) {
             let reader = new FileReader();//file reader cho phép đọc file bất đồng bộ
@@ -104,9 +111,25 @@ const ProductUpdate = () => {
                                             {errors.name && <p style={{ color: 'red' }}>{errors.name.message}</p>}
                                         </div>
                                         <div className='mb-3 mt-3'>
-                                            <lable className='form-lable'>Description:</lable>
-                                            <input  {...register('description', { required: 'Mô tả sản phẩm.' })} type='text' className='form-control' placeholder='Nhập mô tả sản phẩm' />
-                                            {errors.description && <p style={{ color: 'red' }}>{errors.description.message}</p>}
+                                            <label className='form-label'>Description:</label>
+                                            <CKEditor
+                                                editor={ClassicEditor}
+                                                onReady={editor => {
+                                                    // You can store the "editor" and use when it is needed.
+                                                    register('description', { required: 'Description is required!' })
+                                                }}
+
+                                                onChange={(event, editor) => {
+                                                    const data = editor.getData()
+                                                    console.log('data=>', data)
+                                                    setValue('description', data)
+                                                    trigger('description')
+                                                }}
+                                                config={{
+                                                    extraPlugins: [uploadPlugin]
+                                                }}
+
+                                            />
 
                                         </div>
                                         <div className='mb-3 mt-3'>

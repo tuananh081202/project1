@@ -7,7 +7,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import * as actions from '../../redux/actions'
 import requestApi from '../../helpers/Api';
 import { toast } from 'react-toastify'
-
+import CustomUploadAdapter from '../../helpers/CustomUploadAdapter';
 
 
 const ProductAdd = () => {
@@ -39,7 +39,6 @@ const ProductAdd = () => {
             console.log('error=> ', error)
             dispatch(actions.controlLoading(false))
         }
-
     }
 
 
@@ -55,7 +54,11 @@ const ProductAdd = () => {
         })
     }, [])
 
-
+    function uploadPlugin(editor) {
+        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+            return new CustomUploadAdapter(loader)
+        }
+    }
 
     const onImageChange = (event) => {
         if (event.target.files && event.target.files[0]) {
@@ -96,16 +99,19 @@ const ProductAdd = () => {
                                             <label className='form-label'>Description:</label>
                                             <CKEditor
                                                 editor={ClassicEditor}
-
                                                 onReady={editor => {
-                                                    register('description', { required: 'Description is required.' })
-
+                                                    // You can store the "editor" and use when it is needed.
+                                                    register('description', { required: 'Description is required!' })
                                                 }}
+
                                                 onChange={(event, editor) => {
                                                     const data = editor.getData()
-                                                    console.log("data=>", data)
+                                                    console.log('data=>', data)
                                                     setValue('description', data)
                                                     trigger('description')
+                                                }}
+                                                config={{
+                                                    extraPlugins: [uploadPlugin]
                                                 }}
 
                                             />

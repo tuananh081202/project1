@@ -35,10 +35,10 @@ const ProductList = () => {
             name: "Category",
             element: row => row.category.name
         },
-        {
-            name: "Description",
-            element: row => row.description
-        },
+        // {
+        //     name: "Description",
+        //     element: row => row.description
+        // },
 
         {
             name: 'Image',
