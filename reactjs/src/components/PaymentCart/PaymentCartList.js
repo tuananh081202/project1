@@ -117,7 +117,7 @@ const PaymentCartList = () => {
         dispatch(actions.controlLoading(true))
         let query = `?items_per_page=${itemsPerPage}&page=${currentPage}&search=${searchString}`
         requestApi(`/paymentcart${query}`, 'GET', []).then(response => {
-            console.log('respone=>', response)
+            console.log('response=>', response)
             setPaymentCart(response.data.data)
             setNumofPage(response.data.lastPage)
             dispatch(actions.controlLoading(false))

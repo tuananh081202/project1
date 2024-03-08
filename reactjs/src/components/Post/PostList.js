@@ -118,13 +118,12 @@ const PostList = () => {
 
     useEffect(() => {
         dispatch(actions.controlLoading(true))
-        let query = `?items_per_page=${itemsPerPage}&page=${currentPage}`
-        if (searchString) {
-            query += `&search=${searchString}`;
-        }
-        requestApi(`/post${query}`, 'GET', []).then(reponse => {
-            setPost(reponse.data.data)
-            setNumofPage(reponse.data.lastPage)
+        let query = `?items_per_page=${itemsPerPage}&page=${currentPage}&search=${searchString}`
+       
+        requestApi(`/post${query}`, 'GET', []).then(response => {
+            console.log('respone=>',response)
+            setPost(response.data.data)
+            setNumofPage(response.data.lastPage)
             dispatch(actions.controlLoading(false))
         }).catch(err => {
             console.log(err)

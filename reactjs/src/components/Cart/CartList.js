@@ -102,10 +102,8 @@ const CartList = () => {
 
     useEffect(() => {
         dispatch(actions.controlLoading(true))
-        let query = `?items_per_page=${itemsPerPage}&page=${currentPage}`
-        if(searchString){
-            query += `&search=${searchString}`;
-        }
+        let query = `?items_per_page=${itemsPerPage}&page=${currentPage}&search=${searchString}`;
+    
         requestApi(`/cart${query}`, 'GET', []).then(response => {
             // console.log('respone=>', response)
             setCart(response.data.data)

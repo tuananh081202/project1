@@ -25,7 +25,7 @@ export class PaymentcartService {
         if (query.search) {
             const search = query.search
             result
-                .where('(payment_cart.customerName LIKE :search OR  payment_cart.paymentMethod LIKE :search OR payment_cart.totalPrice)', { search: `%${search}%` })
+                .where('(payment_cart.customerName LIKE :search OR  payment_cart.paymentMethod LIKE :search OR payment_cart.totalPrice LIKE :search)', { search: `%${search}%` })
         }
         if (query.product) {
             const productId = Number(query.product)

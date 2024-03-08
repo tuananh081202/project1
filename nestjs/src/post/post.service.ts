@@ -21,37 +21,37 @@ export class PostService {
         const items_per_page = Number(query.items_per_page) || 10
         const page = Number(query.page) || 1
         const skip = (page - 1) * items_per_page;
-        let result = this.postRepository.createQueryBuilder('post')
+        let result = this.postRepository.createQueryBuilder('posts')
         if (query.search) {
             const search = query.search
             result
-                .where('(post.title LIKE :search OR post.description LIKE :search )')
+                .where('(posts.title LIKE :search OR posts.summary LIKE :search )',{search:`%${search}`})
         }
         if (query.category) {
             const categoryId = Number(query.category)
-            result.where('post.category =:categoryId', { categoryId })
+            result.where('posts.category =:categoryId', { categoryId })
         }
         if (query.user) {
             const userId = Number(query.user)
-            result.where('post.user =:userId', { userId })
+            result.where('posts.user =:userId', { userId })
         }
 
         result
-            .leftJoinAndSelect('post.category', 'category')
-            .leftJoinAndSelect('post.user', 'user')
+            .leftJoinAndSelect('posts.category', 'category')
+            .leftJoinAndSelect('posts.user', 'user')
             .orderBy('category.create_at', 'DESC')
             .orderBy('user.created_at', 'DESC')
             .skip(skip)
             .take(items_per_page)
             .select([
-                'post.id',
-                'post.title',
-                'post.summary',
-                'post.description',
-                'post.thumbnail',
-                'post.status',
-                'post.created_at',
-                'post.updated_at',
+                'posts.id',
+                'posts.title',
+                'posts.summary',
+                'posts.description',
+                'posts.thumbnail',
+                'posts.status',
+                'posts.created_at',
+                'posts.updated_at',
                 'category.id',
                 'category.name',
                 'category.description',

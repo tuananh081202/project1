@@ -100,11 +100,10 @@ const ProductList = () => {
 
     useEffect(() => {
         dispatch(actions.controlLoading(true));
-        let query = `?items_per_page=${itemsPerPage}&page=${currentPage}`;
-        if (searchString) {
-            query += `&search=${searchString}`;
-        }
+        let query = `?items_per_page=${itemsPerPage}&page=${currentPage}&search=${searchString}`;
+        
         requestApi(`/product${query}`, 'GET', []).then(response => {
+            console.log("res=>",response)
             setProduct(response.data.data);
             setNumofPage(response.data.lastPage);
             dispatch(actions.controlLoading(false));

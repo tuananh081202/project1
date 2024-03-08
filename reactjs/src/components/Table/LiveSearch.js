@@ -18,7 +18,7 @@ const LiveSearch = ({onKeySearch}) => {
         setKeyWord(target.value)
     }
   return (
-    <input type='search' onChange={onTying} value={keyword} className='form-control form-control-sm ms-1' placeholder='Email or Name'></input>
+    <input type='search' onChange={onTying} value={keyword} className='form-control form-control-sm ms-1' placeholder=' Name '></input>
   )
 }
 

@@ -26,7 +26,7 @@ export class ProductService {
         if (query.search) {
             const search = query.search
             result
-                .where('(product.name LIKE :search OR product.description LIKE :search)', { search: `%${search}%` })
+                .where('(product.name LIKE :search OR product.category LIKE :search)', { search: `%${search}%` })
         }
         if (query.category) {
             const categoryId = Number(query.category);

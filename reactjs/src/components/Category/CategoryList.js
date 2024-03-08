@@ -108,7 +108,7 @@ const CategoryList = () => {
         dispatch(actions.controlLoading(true))
         let query = `?items_per_page=${itemsPerPage}&page=${currentPage}&search=${searchString}`
         requestApi(`/category${query}`, 'GET', []).then(response => {
-            console.log('respone=>', response)
+            console.log('response=>', response)
             setCategory(response.data.data)
             setNumofPage(response.data.lastPage)
             dispatch(actions.controlLoading(false))
