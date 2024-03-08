@@ -32,7 +32,8 @@ import { MailerModule } from './mailer/mailer.module';
     PaymentcartModule,
     PostModule,
     TypeOrmModule.forFeature([User]),
-    MailerModule
+    MailerModule,
+
   ],
   controllers: [AppController, ],
   providers:[AppService,

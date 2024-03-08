@@ -12,25 +12,25 @@ export class MailerService {
 
         const transporter = nodemailer.createTransport({
             host: this.configService.get<string>('MAIL_HOST'),
-            post: this.configService.get<string>('MAIL_POST'),
+            port: this.configService.get<number>('MAIL_POST'),
             secure: false ,
             auth: {
                 user:this.configService.get<string>('MAIL_USER'),
                 pass:this.configService.get<string>('MAIL_PASSWORD'),
             },
-        });
+        }); 
         return transporter;
     }
 
     async sendEmail(dto: SendEmailDto){
         const {from, recipients, subject, html, placeholderReplacements} = dto;
 
-        const transport = await this.mailTransport()
+        const transport =  this.mailTransport()
         
         const options: Mail.Options = {
             from: from?? {
-                name:  this.configService.get<string>('MAIL_USER'),
-                address: this.configService.get<string>('MAIL_PASSWORD'),
+                name:  this.configService.get<string>('APP_NAME'),
+                address: this.configService.get<string>('DEFAULT_MAIL_FROM'),
             },
             to:recipients,
             subject,
