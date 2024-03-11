@@ -89,7 +89,7 @@ const ProductAdd = () => {
                         <div className='card-body'>
                             <div className='row mb-3'>
                                 <form>
-                                    <div className='col-md-6'>
+                                <div className='col-md-6'>
                                         <div className='mb-3 mt-3'>
                                             <label className='form-label'>Product Name:</label>
                                             <input  {...register('name', { required: 'Thêm tên sản phẩm.' })} type='text' className='form-control' placeholder='Nhập tên sản phẩm' />
@@ -155,9 +155,11 @@ const ProductAdd = () => {
                                             </select>
 
                                         </div>
+                                       
                                         <button type='button' onClick={handleSubmit(handleSubmitFormAdd)} className='btn btn-success'>Submit</button>
 
                                     </div>
+
                                 </form>
 
                             </div>

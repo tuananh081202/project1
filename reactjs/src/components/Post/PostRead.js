@@ -8,10 +8,14 @@ const PostRead = () => {
     const { id } = useParams()
 
     useEffect(() => {
-        axios.get('http://localhost:3000/post/api/' + id)
+        axios.get(`http://localhost:3000/post/` + id)
             .then(res => setData(res.data))
-            .catch(err => console.log(err))
-    })
+            .catch(err => console.log(err));
+    }, [])
+
+   
+       
+      
     return (
         <div id='layoutSidenav_content'>
             <main>

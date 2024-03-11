@@ -1,7 +1,6 @@
 import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put, Query, Req, UploadedFile,ParseArrayPipe, UseGuards, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/create-product.dto';
-import { AuthGuard } from 'src/auth/auth.guard';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { storageConfig } from 'helpers/config';
 import { extname } from 'path';

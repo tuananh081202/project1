@@ -26,7 +26,7 @@ export class UserController {
     @ApiQuery({name:'page'})
     @ApiQuery({name:'items_per_page'})
     @ApiQuery({name:'search'})
-    @Get()
+    @Get('')
     findAll(@Query()query:FilterUserDto): Promise<User> {
         return this.userService.findAll(query);
     }

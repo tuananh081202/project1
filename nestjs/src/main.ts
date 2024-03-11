@@ -13,7 +13,8 @@ async function bootstrap() {
     .addTag('User')
     .addBearerAuth()
     .build();
-
+  
+  // app.setGlobalPrefix('api');
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
   app.enableCors();

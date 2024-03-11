@@ -49,11 +49,13 @@ function App() {
           <Route element={<PrivateRoutes />}>
             <Route path='/' element={<Dashboard />} />
             <Route path='/Charts' element={<Charts />} />
+
             <Route path='/user' element={<UserList />} />
             <Route path='/user/add' element={<UserAdd />} />
             <Route path='/user/edit/:id' element={<UserUpdate />} />
             <Route path='/user/:id' element={<UserRead />} />
             <Route path='/profile' element={<Profile />} />
+            
             <Route path='/category' element={<CategoryList />} />
             <Route path='/category/add' element={<CategoryAdd />} />
             <Route path='/category/edit/:id' element={<CategoryUpdate />} />
@@ -81,8 +83,8 @@ function App() {
 
             <Route path='/post' element={<PostList />} />
             <Route path='/post/add' element={<PostAdd />} />
-            <Route path='/post/api/:id' element={<PostRead />} />
-            <Route path='/post/edit/api/:id' element={<PostUpdate />} />
+            <Route path='/post/:id' element={<PostRead />} />
+            <Route path='/post/edit/:id' element={<PostUpdate />} />
           </Route>
         </Route>
         <Route element={<PublicRoutes />}>

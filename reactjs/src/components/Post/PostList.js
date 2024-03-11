@@ -65,8 +65,8 @@ const PostList = () => {
             name: 'Actions',
             element: row => (
                 <>
-                    <Link to={`/post/api/${row.id}`} className='btn btn-sm btn-info me-1'><i class='fa-solid fa-book'></i> Read </Link>
-                    <Link to={`/post/edit/api/${row.id}`} className='btn btn-sm btn-warning me-1' ><i className="fa fa-pencil"></i> Edit </Link>
+                    <Link to={`/post/${row.id}`} className='btn btn-sm btn-info me-1'><i class='fa-solid fa-book'></i> Read </Link>
+                    <Link to={`/post/edit/${row.id}`} className='btn btn-sm btn-warning me-1' ><i className="fa fa-pencil"></i> Edit </Link>
                     <button type='button' className='btn btn-sm btn-danger me-1' onClick={() => handleDelete(row.id)}><i className='fa fa-trash'></i>Delete </button>
 
                 </>

@@ -116,18 +116,17 @@ const ProductList = () => {
     const getProductExport = (_event, done) => {
         let result = []
         if (ProductList && ProductList.length > 0) {
-            result.push(['id', 'name', 'category.name', 'description', 'status', 'image', 'created_at', 'updated_at']);
+            result.push(['id', 'name',  'description', 'status', 'image', 'created_at', 'updated_at']);
             ProductList.map(item => {
                 let arr = [];
 
                 arr[0] = item.id
                 arr[1] = item.name
-                arr[2] = item.category.name
-                arr[3] = item.description
-                arr[4] = item.image
-                arr[5] = item.created_at
-                arr[6] = item.updated_at
-                arr[7] = item.status
+                arr[2] = item.description
+                arr[3] = item.image
+                arr[4] = item.created_at
+                arr[5] = item.updated_at
+                arr[6] = item.status
                 result.push(arr)
             })
             setDataExport(result);

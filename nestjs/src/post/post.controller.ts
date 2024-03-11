@@ -52,12 +52,12 @@ export class PostController {
         return await this.PostService.findAll(query)
     }
 
-    @Get('api/:id')
+    @Get(':id')
     async findOne(@Param('id') id:string):Promise<Posts>{
         return await this.PostService.findOne(Number(id))
     }
 
-    @Put('api/:id')
+    @Put(':id')
     @UseInterceptors(FileInterceptor('thumbnail',{
         storage: storageConfig('post'),
         fileFilter:(req,file,cb)=>{
@@ -87,7 +87,7 @@ export class PostController {
        return this.PostService.update(Number(id),UpdatePostDto)
     }
 
-    @Delete('api/:id')
+    @Delete(':id')
     deletePost(@Param('id') id:string){
         return this.PostService.delete(Number(id))
     }

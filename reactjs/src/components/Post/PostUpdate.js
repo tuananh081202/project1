@@ -31,7 +31,7 @@ const PostUpdate = () => {
         }
         dispatch(actions.controlLoading(true))
         try {
-            const res = await requestApi(`/post/api/${params.id}`, 'PUT', formData, 'json', 'multipart/form-data');
+            const res = await requestApi(`/post/${params.id}`, 'PUT', formData, 'json', 'multipart/form-data');
             console.log('res=>', res)
             dispatch(actions.controlLoading(false))
             toast.success('Cập nhật bưu kiện thành công !!!', { position: 'top-center', autoClose: 2000 })
@@ -49,7 +49,7 @@ const PostUpdate = () => {
                 const res = await requestApi('/category', 'GET');
                 console.log('res=>', res)
                 SetCategory(res.data.data);
-                const detailPost = await requestApi(`/post/api/${params.id}`, 'GET');
+                const detailPost = await requestApi(`/post/${params.id}`, 'GET');
                 console.log("detailPost=>", detailPost)
                 const fields = ['title', 'summary', 'description', 'thumbnail', 'category', 'status'];
                 fields.forEach(field => {
