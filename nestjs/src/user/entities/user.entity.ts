@@ -8,6 +8,9 @@ export class User {
   id: number;
 
   @Column()
+  MaNV:string
+
+  @Column()
   first_name: string;
 
   @Column()
@@ -18,6 +21,9 @@ export class User {
 
   @Column()
   password:string;
+
+  @Column()
+  phone:string
 
   @Column({nullable:true ,default:null})
   refresh_token: string;

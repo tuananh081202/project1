@@ -58,12 +58,12 @@ export class UserController {
        return this.userService.update(Number(id),updateUserDto)
     }
 
-    @Roles('Admin')
-    @Delete(':id')
-    multipleDelete(@Query('ids',new ParseArrayPipe({items:String, separator:','})) ids: string[]) {
-        console.log("delete multi=>",ids);
-        return this.userService.multipleDelete(ids)
-    }
+    // @Roles('Admin')
+    // @Delete(':id')
+    // multipleDelete(@Query('ids',new ParseArrayPipe({items:String, separator:','})) ids: string[]) {
+    //     console.log("delete multi=>",ids);
+    //     return this.userService.multipleDelete(ids)
+    // }
 
     @Roles('Admin')
     @Delete(':id')

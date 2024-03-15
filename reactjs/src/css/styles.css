@@ -11259,3 +11259,52 @@ input[type=radio]{
 .star{
   cursor: pointer;
 }
+
+.admin-badge {
+  position: relative;
+  padding-left: 50px;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 55%;
+    left: 15%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 10px;
+    border-radius: 80%;
+    background-color: #5de617;
+  }
+}
+
+footer {
+  background-color: #cfcac8;
+  color: #fff;
+  padding: 20px 0;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.social-links {
+  text-align: center;
+}
+
+.social-links a {
+  margin: 0 15px;
+  font-size: 40px;
+  color: #0a0402;
+  transition: color 0.2s ease-in-out;
+}
+
+.social-links a:hover {
+  color: #007bff;
+}
+
+p {
+  text-align: center;
+  margin-top: 10px;
+}
+

@@ -25,6 +25,10 @@ const UserList = () => {
             name:"ID",
             element: row=>row.id
         },
+        //  {
+        //     name:"MaNV",
+        //     element: row=>row.MaNV
+        // },
         {
             name:"First name",
             element: row=>row.first_name
@@ -36,6 +40,15 @@ const UserList = () => {
         {
             name:"Email",
             element: row=>row.email
+        },
+        { 
+            name:"Phone",
+            element:row=>row.phone
+
+        },
+        {
+            name:"Role",
+            element: row=>row.roles 
         },
         {
             name:"Status",
@@ -53,7 +66,7 @@ const UserList = () => {
             name:"Actions",
             element: row  =>(
                 <>
-                    <Link to={`/user/${row.id}`} className='btn btn-sm btn-info me-1'><i class="fa-solid fa-book"></i> Read </Link>
+                    {/* <Link to={`/user/${row.id}`} className='btn btn-sm btn-info me-1'><i class="fa-solid fa-book"></i> Read </Link> */}
                     <Link to={`/user/edit/${row.id}`} className='btn btn-sm btn-warning me-1' ><i className="fa fa-pencil"></i> Edit </Link>
                     <button type='button' className='btn btn-sm btn-danger me-1' onClick={()=> handleDelete(row.id)}><i className='fa fa-trash'></i> Delete</button>
                 </>
@@ -145,10 +158,11 @@ const UserList = () => {
         <div id="layoutSidenav_content">
             <main>
                 <div className="container-fluid px-4">
-                    <h1 className="mt-4">Tables</h1>
+                    <h1 className="mt-4">Người dùng</h1>
                     <ol className="breadcrumb mb-4">
-                        <li className="breadcrumb-item"><Link to='/'>Dashboard</Link></li>
-                        <li className="breadcrumb-item active">Tables</li>
+                        <li className="breadcrumb-item"><Link to='/'>Trang chủ</Link></li>
+                        <li className="breadcrumb-item">Người dùng</li>
+                        <li className="breadcrumb-item active">Danh sách người dùng</li>
                     </ol>
                     <div className='mb-3'>
                         <Link className='btn btn-sm btn-success me-2' to='/user/add'><i className='fa fa-plus'></i>Add new</Link>
@@ -182,6 +196,8 @@ const UserList = () => {
                     />
                   
                 </div>
+               
+       
             </main>
             <Modal show={showModal} onHide={()=>setShowModal(false)}size='sm'>
                 <Modal.Header closeButton>
@@ -197,8 +213,9 @@ const UserList = () => {
                     <Button className='btn-danger' onClick={requestDeleteApi}>Delete</Button>
                 </Modal.Footer>
             </Modal>
-
+            
         </div>
+        
 
     )
 }

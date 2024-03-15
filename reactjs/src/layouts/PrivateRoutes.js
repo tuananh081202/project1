@@ -5,7 +5,7 @@ const PrivateRoutes = () => {
 
     let token = localStorage.getItem('access_token') || false;
     return (
-       token? <Outlet/> : <Navigate to='/login'/>
+       token? <Outlet/> : <Navigate to='/admin/login'/>
     )
  
 }

@@ -38,7 +38,7 @@ const Dashboard = () => {
                     </ol>
                     <div className="row">
                         <div className="col-xl-3 col-md-6">
-                            <div className="card bg-primary text-white mb-4">
+                            <div className="card bg-success text-white mb-4">
                                 <div className="card-body">Tổng số người dùng
                                     {DashboardData.totalUser && (<span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                         {DashboardData.totalUser}
@@ -62,7 +62,7 @@ const Dashboard = () => {
                             </div>
                         </div>
                         <div className="col-xl-3 col-md-6">
-                            <div className="card bg-primary text-white mb-4">
+                            <div className="card bg-info text-white mb-4">
                                 <div className="card-body">Tổng số sản phẩm
                                     {DashboardData.totalProduct && (<span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                         {DashboardData.totalProduct}
@@ -85,9 +85,6 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         </div>
-
-
-
                     </div>
                 </div>
             </main>

@@ -4,7 +4,7 @@ import requestApi from '../helpers/Api';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import * as actions from '../redux/actions'
-import {controlLoading}  from '../redux/actions';
+
 const Login = () => {
   const dispatch=useDispatch();
   const [loginData,setLoginData]=useState({});
@@ -115,7 +115,7 @@ const Login = () => {
                             </div>
                             <div className="card-footer text-center py-3">
                                 <div className="small">
-                                    <Link to="/register">Need an account? Sign up!</Link>
+                                    <Link to="/admin/register">Need an account? Sign up!</Link>
                                 </div>
                             </div>
                         </div>

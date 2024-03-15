@@ -18,6 +18,7 @@ export class AuthController {
         console.log(registerUserDto)
         return this.authService.register(registerUserDto);
     }
+    
 
     @Post('login')
     // @SetMetadata('isPublic',true)

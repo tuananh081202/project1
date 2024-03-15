@@ -34,11 +34,11 @@ export class CategoryController {
         return await this.categoryService.findOne(Number(id));
 
     }
-    @Delete(':id')
-    multipleDelete(@Query('ids', new ParseArrayPipe({ items: String, separator: ',' })) ids: string[]) {
-        console.log("delete multi=>", ids);
-        return this.categoryService.multipleDelete(ids)
-    }
+    // @Delete(':id')
+    // multipleDelete(@Query('ids', new ParseArrayPipe({ items: String, separator: ',' })) ids: string[]) {
+    //     console.log("delete multi=>", ids);
+    //     return this.categoryService.multipleDelete(ids)
+    // }
 
     @Delete(':id')
 

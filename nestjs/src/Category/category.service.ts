@@ -65,9 +65,9 @@ export class CategoryService{
       };
   }
 
-    async multipleDelete(ids:string[]):Promise<DeleteResult>{
-    return await this.categoryRepository.delete({id:In(ids)})
-}
+//     async multipleDelete(ids:string[]):Promise<DeleteResult>{
+//     return await this.categoryRepository.delete({id:In(ids)})
+// }
 
  
 }

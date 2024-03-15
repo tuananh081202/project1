@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import * as actions from '../redux/actions'
 import { useNavigate, Link } from 'react-router-dom';
 
+
 const Register = () => {
     const [registerData, setRegisterData] = useState({})
     const [formErrors, setFormErrors] = useState({});
@@ -26,12 +27,7 @@ const Register = () => {
     const validateForm = () => {
         let isValid = true;
         const errors = {}
-        if (registerData.first_name) {
-            errors.first_name = "First name is required"
-        }
-        if (registerData.last_name) {
-            errors.last_name = "Last name is required"
-        }
+        
         if (registerData.email === '' || registerData.email === undefined) {
             errors.email = "Please enter email"
         } else {
@@ -43,12 +39,7 @@ const Register = () => {
         if (registerData.password === '' || registerData.password === undefined) {
             errors.password = 'Password must be at least 8 characters'
         }
-        else {
-            let valid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/i.test(registerData.password);
-            if (!valid) {
-                errors.password = 'Password is not valid'
-            }
-        }
+        
         if (registerData.password !== registerData.confirmPassword) {
             errors.confirmPassword = 'Password don\'t match'
         }
@@ -69,9 +60,10 @@ const Register = () => {
             console.log('request register api')
             dispatch(actions.controlLoading(true))
             requestApi('/auth/register', 'POST', registerData).then((res) => {
-                console.log('Registration successful!', res)
+                console.log('Đăng ký thành công !', res)
                 dispatch(actions.controlLoading(false))
-                navigate('/')
+                toast.success('Đăng ký thành công !!!', { position: 'top-center', autoClose: 2000 })
+                setTimeout(() => navigate('/user'), 3000)
             }).catch(err => {
                 dispatch(actions.controlLoading(false))
                 console.log('err=>', err)
@@ -144,7 +136,7 @@ const Register = () => {
                                         </form>
                                     </div>
                                     <div className="card-footer text-center py-3">
-                                        <div className="small"><Link to='/login'>Have an account? Go to login</Link></div>
+                                        <div className="small"><Link to='/admin/login'>Have an account? Go to login</Link></div>
                                     </div>
                                 </div>
                             </div>

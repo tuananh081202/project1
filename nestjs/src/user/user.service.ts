@@ -29,9 +29,11 @@ export class UserService {
             .take(items_per_page)
             .select([
                 'user.id',
+                'user.MaNV',
                 'user.first_name',
                 'user.last_name',
                 'user.email',
+                'user.phone',
                 'user.avatar',
                 'user.status',
                 'user.roles',
@@ -98,9 +100,9 @@ export class UserService {
         return await this.userRepository.update(id, { avatar });
     }
 
-    async multipleDelete(ids: string[]): Promise<DeleteResult> {
-        return await this.userRepository.delete({ id: In(ids) })
-    }
+    // async multipleDelete(ids: string[]): Promise<DeleteResult> {
+    //     return await this.userRepository.delete({ id: In(ids) })
+    // }
 
 
 
