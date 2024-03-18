@@ -12,10 +12,12 @@ const Sidebar = () => {
                     <div className="nav">
 
                         <div className="nav-link" >
-                            <div className="sb-nav-link-icon"><i class="fa-solid fa-user-tie"></i></div>
+                            <div className="sb-nav-link-icon"><i ><img src='/assets/img/admin_avatar.jpg' alt='Admin' style={{ width: '30px' }} /></i></div>
                              Admin 
+                            
                         </div>
-                        {/* <span className="admin-badge" >Quản trị viên</span> */}
+                        <span className="admin-badge" >Quản trị viên</span>
+                        
                         <div className="sb-sidenav-menu-heading">Interface</div>
 
                         <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseDashboard" aria-expanded="false" aria-controls="collapseDashboard">

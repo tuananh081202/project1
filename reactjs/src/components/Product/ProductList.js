@@ -22,6 +22,8 @@ const ProductList = () => {
     const [showModal, setShowModal] = useState(false)
     const [refresh, setRefresh] = useState(Date.now())
     const [dataExport, setDataExport] = useState([])
+  
+ 
     const columns = [
         {
             name: "ID",
@@ -132,7 +134,7 @@ const ProductList = () => {
             setDataExport(result);
             done();
         }
-
+    
     }
     return (
         <div id="layoutSidenav_content">

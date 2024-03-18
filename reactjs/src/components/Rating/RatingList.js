@@ -24,6 +24,7 @@ const RatingList = () => {
     const [showModal, setShowModal] = useState(false)
     const [refresh, setRefresh] = useState(Date.now())
     const [dataExport, setDataExport] = useState([])
+   
     const columns = [
         {
             name: "ID",
@@ -199,6 +200,7 @@ const RatingList = () => {
                             console.log('selected row in uselist=>', rows)
                             setSelectedRows(rows)
                         }}
+                        
                     />
 
                 </div>

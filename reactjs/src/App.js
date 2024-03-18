@@ -41,13 +41,6 @@ import PostAdd from './components/Post/PostAdd';
 import PostRead from './components/Post/PostRead';
 import PostUpdate from './components/Post/PostUpdate';
 import ResetPassword from './components/ResetPassword';
-import UserDashboard from './UserComponents/UserDashboard';
-import LoginUser from './UserComponents/LoginUser';
-import RegisterUser from './UserComponents/RegisterUser';
-import UserMain from './layout/UserMain';
-import UserLayout from './layout/UserLayout';
-import UserPrivateRoutes from './layout/UserPrivateRoutes';
-import UserPublicRoutes from './layout/UserPublicRoutes';
 
 function App() {
   return (
@@ -104,52 +97,7 @@ function App() {
       </Route>
       <Route path='*' element={<PageNotFound />} />
     
-      <Route path='/' element={<UserLayout />}>
-        
-        <Route element={<UserMain />}>
-          <Route element={<UserPrivateRoutes />}>
-            <Route path='/' element={<UserDashboard />} />
-            <Route path='user/profile' element={<Profile/>} />
-            <Route path='user/category' element={<CategoryList />} />
-            <Route path='user/category/add' element={<CategoryAdd />} />
-            <Route path='user/category/edit/:id' element={<CategoryUpdate />} />
-            <Route path='user/category/:id' element={<CategoryRead />} />
-
-            <Route path='user/product' element={<ProductList />} />
-            <Route path='user/product/add' element={<ProductAdd />} />
-            <Route path='user/product/edit/:id' element={<ProductUpdate />} />
-            <Route path='user/product/:id' element={<ProductRead />} />
-
-            <Route path='user/ratings' element={<RatingList />} />
-            <Route path='user/ratings/add' element={<RatingAdd />} />
-            <Route path='user/ratings/edit/:id' element={<RatingUpdate />} />
-            <Route path='user/ratings/:id' element={<RatingRead />} />
-
-            <Route path='user/cart' element={<CartList />} />
-            <Route path='user/cart/add' element={<CartAdd />} />
-            <Route path='user/cart/edit/:id' element={<CartUpdate />} />
-            <Route path='user/cart/:id' element={<CartRead />} />
-
-            <Route path='user/paymentcart' element={<PaymentCartList />} />
-            <Route path='user/paymentcart/add' element={<PaymentCartAdd />} />
-            <Route path='user/paymentcart/edit/:id' element={<PaymentCartUpdate />} />
-            <Route path='user/paymentcart/:id' element={<PaymentCartRead />} />
-
-            <Route path='user/post' element={<PostList />} />
-            <Route path='user/post/add' element={<PostAdd />} />
-            <Route path='user/post/:id' element={<PostRead />} />
-            <Route path='user/post/edit/:id' element={<PostUpdate />} />
-            
-          </Route>
-          
-        </Route>
-        <Route element={<UserPublicRoutes />}>
-          <Route path='/user/login' element={<LoginUser />} />
-          <Route path='/user/register' element={<RegisterUser />} />
-          <Route path='/user/resetpassword' element={<ResetPassword />} />
-        </Route>
-
-      </Route>
+      
     </Routes>
    
 

@@ -2,31 +2,55 @@ import React, { useEffect, useState } from 'react'
 import LiveSearch from './LiveSearch';
 
 const UserTable = (props) => {
-    const { name, data, columns, currentPage, numOfPage, onPageChange, onChangeItemsPerPage, onKeySearch, onSelectedRows } = props;
+    const { name, data, columns, currentPage, numOfPage, onPageChange, onChangeItemsPerPage, onKeySearch, onSelectedRows} = props;
     const [selectedRows, setSelectedRows] = useState([])
+    const [sortBy, setSortBy] = useState({ column: null, direction: null });
 
-    const renderHeaders = () => {
-        return columns.map((col, index) => <th key={index}>{col.name}</th>)
-    }
+    
 
     useEffect(() => {
         console.log('selected rows=> ', selectedRows)
         onSelectedRows(selectedRows)
     }, [selectedRows]);
+    
+    const renderHeaders = () => {
+        return columns.map((col, index) => (
+            <th key={index} onClick={() => handleSort(col.name)}>
+                {col.name} {sortBy.column === col.name && (
+                    sortBy.direction === 'asc' ? '▲' : '▼',
+                    console.log("sort by",sortBy)
+                )}
+            </th>
+        ));
+    };
+
+    const handleSort = (column) => {
+        const direction = sortBy.column === column && sortBy.direction === 'asc' ? 'desc' : 'asc';
+        setSortBy({ column, direction });
+    };
 
     const renderData = () => {
-        return (
-            data.map((item, index) => (
-                <tr key={index}>
-                    <td><input type='checkbox' checked={selectedRows.includes(String(item.id)) ? true : false} className='form-check-input' value={item.id} onChange={onClickCheckbox} /></td>
-                    {
-                        columns.map((col, ind) => <td key={ind}>{col.element(item)}</td>)
-                    }
-                </tr>
+        let sortedData = [...data];
+        if (sortBy.column) {
+            sortedData = sortedData.sort((a, b) => {
+                const aValue = a[sortBy.column];
+                const bValue = b[sortBy.column];
+                if (sortBy.direction === 'asc') {
+                    return aValue < bValue ? -1 : 1;
+                } else {
+                    return aValue > bValue ? -1 : 1;
+                }
+            });
+        }
 
-            ))
-        )
-    }
+        return sortedData.map((item, index) => (
+            <tr key={index}>
+                <td><input type='checkbox' checked={selectedRows.includes(String(item.id))} className='form-check-input' value={item.id} onChange={onClickCheckbox} /></td>
+                {columns.map((col, ind) => <td key={ind}>{col.element(item)}</td>)}
+            </tr>
+        ));
+    };
+
 
     const onClickCheckbox = (event) => {
         let checked = event.target.checked;
@@ -125,11 +149,12 @@ const UserTable = (props) => {
                     </div>
                     <table className='table table-striped table-bordered' cellPadding="0" width="100%">
                         <thead>
-                            <tr>
+                            <tr >
+
                                 <td><input checked={selectedRows.length === data.length && data.length > 0 ? true : false} type='checkbox' className='form-check-input' onChange={onSelectAll} /></td>
-                                
+
                                 {renderHeaders()}
-                                                               
+
                             </tr>
                         </thead>
 
@@ -142,6 +167,7 @@ const UserTable = (props) => {
                                 {renderHeaders()}
                             </tr>
                         </tfoot> */}
+                       
                     </table>
                     {numOfPage > 1 && (
                         <div className='row'>
@@ -160,6 +186,6 @@ const UserTable = (props) => {
             </div>
         </div>
     )
-}   
+}
 
 export default UserTable

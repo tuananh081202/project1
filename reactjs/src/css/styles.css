@@ -11308,3 +11308,20 @@ p {
   margin-top: 10px;
 }
 
+/* Style the button containing the sort icon */
+.btn-sort {
+  padding: 0 5px; /* Adjust padding as needed */
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+/* Optional styles for different sort directions (asc/desc) */
+.btn-sort.asc {
+  color: #0099FF; /* Example blue for ascending sort */
+}
+
+.btn-sort.desc {
+  color: #FF0000; /* Example red for descending sort */
+}
+
