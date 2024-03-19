@@ -16,7 +16,7 @@ const Sidebar = () => {
                              Admin 
                             
                         </div>
-                        <span className="admin-badge" >Quản trị viên</span>
+                        <span className="admin-badge" ><small>Quản trị viên</small></span>
                         
                         <div className="sb-sidenav-menu-heading">Interface</div>
 
@@ -25,6 +25,16 @@ const Sidebar = () => {
                              Dashboard
                             <div className="sb-sidenav-collapse-arrow"><i className="fas fa-angle-down"></i></div>
                         </a>
+                        <div className="collapse" id="collapseDashboard" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav className="sb-sidenav-menu-nested nav">
+
+                                <Link to='/' className='nav-link'>Thống kê</Link>
+                                <Link to='/product' className='nav-link'>Danh sách sản phẩm</Link>
+                                <Link to='/user' className='nav-link'>Danh sách người dùng</Link>
+
+                            </nav>
+                        </div>
+
                         
 
                         <a className="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseUser" aria-expanded="false" aria-controls="collapseUser">

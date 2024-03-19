@@ -1,12 +1,103 @@
 import React, { useState, useEffect } from 'react'
-import requestApi from '../helpers/Api';
+import requestApi from '../../helpers/Api';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import * as actions from '../redux/actions'
+import { useNavigate } from 'react-router-dom';
+import * as actions from '../../redux/actions'
+import { formatDateTime } from '../../helpers/common';
+import { Button, Modal } from 'react-bootstrap';
+import { useForm } from 'react-hook-form'
+import Table from '../Table/Table';
 
 const Dashboard = () => {
     const dispatch = useDispatch()
     const [DashboardData, setDashboardData] = useState({});
+    const [category, setCategory] = useState([])
+    const navigate = useNavigate()
+    const { register, handleSubmit, formState: { errors } } = useForm();
+    const [numOfPage, setNumofPage] = useState(1)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [itemsPerPage, setItemsPerPage] = useState(1)
+    const [searchString, setSearchString] = useState('')
+    const [selectedRows, setSelectedRows] = useState([])
+    const [deleteItem, setDeleteItem] = useState(null)
+    const [deleteType, setDeleteType] = useState('single')
+    const [showModal, setShowModal] = useState(false)
+    const [refresh, setRefresh] = useState(Date.now())
+    // const params = useParams()
+    const columns = [
+        {
+            name: "ID",
+            element: row => row.id
+        },
+        {
+            name: "Name",
+            element: row => row.name
+        },
+        {
+            name: "Description",
+            element: row => row.description
+        },
+        {
+            name: "Created at",
+            element: row => formatDateTime(row.created_at)
+        },
+        {
+            name: "Updated at",
+            element: row => formatDateTime(row.updated_at)
+        },
+
+        {
+            name: "Actions",
+            element: row => (
+                <>
+
+                    <Link to={`/category/${row.id}`} className='btn btn-sm btn-info me-1'><i class="fa-solid fa-book"></i> Read </Link>
+                    <Link to={`/category/edit/${row.id}`} className='btn btn-sm btn-warning me-1' ><i className="fa fa-pencil"></i> Edit </Link>
+                    <button type='button' className='btn btn-sm btn-danger me-1' onClick={() => handleDelete(row.id)}><i className='fa fa-trash'></i> Delete</button>
+                </>
+            )
+        }
+    ]
+
+
+    const handleDelete = (id) => {
+        console.log('single delete with id =>', id)
+        setShowModal(true)
+        setDeleteItem(id)
+        setDeleteType('single')
+    }
+
+    const requestDeleteApi = () => {
+
+        requestApi(`/category/${deleteItem}`, 'DELETE', []).then(response => {
+            setShowModal(false)
+            setRefresh(Date.now())
+            dispatch(actions.controlLoading(false))
+        }).catch(err => {
+            console.log(err)
+            setShowModal(false)
+            dispatch(actions.controlLoading(false))
+        })
+
+
+    }
+
+    useEffect(() => {
+        dispatch(actions.controlLoading(true))
+        let query = `?items_per_page=${itemsPerPage}&page=${currentPage}&search=${searchString}`
+        requestApi(`/category${query}`, 'GET', []).then(response => {
+            console.log('response=>', response)
+            setCategory(response.data.data)
+            setNumofPage(response.data.lastPage)
+            dispatch(actions.controlLoading(false))
+        }).catch(err => {
+            console.log(err)
+            dispatch(actions.controlLoading(false))
+        })
+
+    }, [currentPage, itemsPerPage, searchString, refresh])
+
     useEffect(() => {
         const promiseUser = requestApi('/user', 'GET')
         const promiseCategory = requestApi('/category', 'GET')
@@ -39,8 +130,9 @@ const Dashboard = () => {
                     <div className="row">
                         <div className="col-xl-3 col-md-6">
                             <div className="card bg-success text-white mb-4">
-                                <div className="card-body">Tổng số người dùng
-                                    {DashboardData.totalUser && (<span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                <div className="card-body">Tổng số người dùng 
+                                    
+                                    {DashboardData.totalUser  && (<span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" >
                                         {DashboardData.totalUser}
                                     </span>)}</div>
                                 <div className="card-footer d-flex align-items-center justify-content-between">
@@ -86,8 +178,40 @@ const Dashboard = () => {
                             </div>
                         </div>
                     </div>
+                    <Table
+                        name="Danh sách thể loại"
+                        data={category}
+                        columns={columns}
+                        numOfPage={numOfPage}
+                        currentPage={currentPage}
+                        onPageChange={setCurrentPage}
+                        onChangeItemsPerPage={setItemsPerPage}
+                        onKeySearch={(keyword) => {
+
+                            console.log('keyword in user list comp=>', keyword)
+                            setSearchString(keyword)
+                        }}
+                        onSelectedRows={rows => {
+                            console.log('selected row in uselist=>', rows)
+                            setSelectedRows(rows)
+                        }}
+                    />
                 </div>
             </main>
+            <Modal show={showModal} onHide={() => setShowModal(false)} size='sm'>
+                <Modal.Header closeButton>
+                    <Modal.Title>Confirmation</Modal.Title>
+
+                </Modal.Header>
+                <Modal.Body>
+                    Are you sure want to delete?
+
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={() => setShowModal(false)}>Close</Button>
+                    <Button className='btn-danger' onClick={requestDeleteApi}>Delete</Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     )
 }

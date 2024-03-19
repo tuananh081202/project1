@@ -44,7 +44,7 @@ export default function requestApi(endpoint,method,body,responeType='json', cont
                     if(err.response && err.response.status === 400){
                         localStorage.removeItem('access_token')
                         localStorage.removeItem('refresh_token')
-                        window.location.href ='/login'
+                        window.location.href ='/admin/login'
                     }
                     return Promise.reject(err)
                     

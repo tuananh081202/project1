@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import LiveSearch from './LiveSearch';
 
-const UserTable = (props) => {
+const Table = (props) => {
     const { name, data, columns, currentPage, numOfPage, onPageChange, onChangeItemsPerPage, onKeySearch, onSelectedRows} = props;
     const [selectedRows, setSelectedRows] = useState([])
     const [sortBy, setSortBy] = useState({ column: null, direction: null });
@@ -188,4 +188,4 @@ const UserTable = (props) => {
     )
 }
 
-export default UserTable
+export default Table
